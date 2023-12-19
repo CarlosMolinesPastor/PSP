@@ -19,4 +19,7 @@ console.log('Multiplicacion: ', mult);
 console.log('Division: ', div);
 console.log('Modulo: ', modulo);
 console.log('Exponente: ',exp);
+console.log('Raiz cuadrada de ', num1, ' es: ', Math.sqrt(num1));
+console.log('Raiz cuadrada de ' + num2 + ' es: '+ Math.sqrt(num2));
+
 
