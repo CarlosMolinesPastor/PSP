@@ -11,6 +11,7 @@ function multiplica(n1, n2) {
 }
 
 module.exports = {
-  add: suma,
-  substract: resta,
+  sumar: suma,
+  restar: resta,
+  multiplicar: multiplica,
 };
