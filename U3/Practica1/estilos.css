@@ -1,0 +1,20 @@
+/* Estilos para el encabezado */
+h1 {
+  color: #ca3333;
+  text-align: center;
+}
+
+/* Estilos para el párrafo */
+p {
+  font-size: 18px;
+  text-align: justify
+}
+
+/* Estilos para la imagen */
+img {
+  display: block;
+  margin: 0 auto;
+  max-width: 240px;
+  height: auto;
+}
+
