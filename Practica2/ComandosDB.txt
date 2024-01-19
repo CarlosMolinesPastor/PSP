@@ -1,0 +1,118 @@
+
+
+
+//###############  MQL #################
+db.createDatabase("Marvel")
+use Marvel
+db.createCollection(superheroes)
+db.superheroes.insertMany([
+    {
+    nombre: "Spidermann",
+    superpoder: "Escalar",
+    debilidad: "Su Familia",
+    fuerza: 6
+    }
+    {
+    nombre: "Batman",
+    superpoder: "Tecnologia",
+    debilidad: "Murcielagos",
+    fuerza: 4
+    }
+    {
+    nombre: "Spidermann",
+    superpoder: "Escalar",
+    debilidad: "Su Familia",
+    fuerza: 6
+    }
+    {
+    nombre: "Superman",
+    superpoder: "Super",
+    debilidad: "kriptonita",
+    fuerza: 9
+    }
+])
+//###############  MQL #################
+
+
+/*
+//###################### Creacion de los documentos y la coleccion ########################
+//Creamos el esquema de la BD
+let marvelSchema = new mongoose.Schema({
+    nombre: String,
+    superpoder: String,
+    debilidad: String,
+    fuerza: Number
+});
+
+//Creamos la coleccion superheroes, que la guardamos en la variable Superheroe
+let Superheroe = mongoose.model('superheroes', marvelSchema);
+
+//Anadimos los superheroes
+let super1 = new Superheroe({
+    nombre: "Spidermann",
+    superpoder: "Escalar",
+    debilidad: "Su Familia",
+    fuerza: 6
+});
+
+super1.save().then(
+    result => {
+        console.log("Superheroe añadido", result);
+    }
+    ).catch(
+    error => {
+        console.log("Error", error);
+    }
+    );
+
+let super2 = new Superheroe({
+    nombre: "Batman",
+    superpoder: "Tecnologia",
+    debilidad: "Murcielagos",
+    fuerza: 4
+});
+
+super2.save().then(
+    result => {
+        console.log("Superheroe añadido", result);
+    }
+    ).catch (
+    error => {
+        console.log("Error", error);
+    })
+
+let super3 = new Superheroe({
+    nombre: "Flash",
+    superpoder: "Velocidad",
+    debilidad: "Comida",
+    fuerza: 2
+});
+
+super3.save().then(
+    result => {
+        console.log("Superheroe Añadido", result);
+    }
+    ).catch(
+    error => {
+        console.log("Error", error);
+    }
+    );
+
+let super4 = new Superheroe({
+    nombre: "Superman",
+    superpoder: "Super",
+    debilidad: "kriptonita",
+    fuerza: 9
+});
+
+super4.save().then(
+    result =>{
+        console.log("Superheroe añadido" + result);
+    }
+).catch(
+    error => {
+        console.log("Error", error);
+    }
+);
+//################### Fin de los Documentos y la coleccion ########################
+*/
