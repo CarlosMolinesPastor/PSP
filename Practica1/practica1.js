@@ -17,10 +17,13 @@ const port = 3000;
 const requestListener = function (request, response) {
   //Creamos una variable que contendra la ruta del archivo a cargar
   let url_parts = url.parse(request.url, true);
-  //Creamos la variable filePath que contendra la ruta del archivo que la conseguimos por la url
+  console.log(url_parts);
+  //Creamos la variable string filePath que contendra el archivo que la conseguimos por la url
   let filePath = "." + url_parts.pathname;
+  console.log(filePath);
   //Creamos la variable ext que contendra la extension del archivo
   let ext = path.extname(filePath);
+  console.log(ext);
   // CASOS DE VERIFICACION DE LA RUTA DEL ARCHIVO SOLICITADO
   //Si el archivo esta en la carpeta raiz del servidor, cambiamos la ruta por ./index.html
   if (filePath == "./") {
@@ -48,7 +51,7 @@ const requestListener = function (request, response) {
   //Inicializamos la variable contentType con el modulo que hemos realizado
   //que pasandole como argumento la extension del archivo nos devuelve el tipo de contenido
   let contentType = getContentType(ext);
-
+  console.log(contentType);
   //Lee el archivo en la ruta especificada por filePath, cuando la lectura se completa
   //ejecuta la funcion callback que recibe dos parametros, err y data
   fs.readFile(filePath, (err, data) => {
