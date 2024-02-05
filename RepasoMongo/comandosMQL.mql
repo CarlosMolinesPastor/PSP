@@ -1,0 +1,119 @@
+// MQL
+
+//######################## Creacion collecciones ########################
+
+db.createCollection('nombre', opeciones)
+
+db.createCollection('alumnos')
+
+//############################# Insertar ################################
+
+// insertOne
+
+db.collection.insertOne(document)
+
+db.alumnos.insertOne({
+        nombre: "Juan",
+        apellidos: "Pastor",
+        matriculas: 2
+    });
+
+// insertMany
+
+db.collection.insertMany([{doc1}, {doc2}])
+
+db.collection.insertMany([
+{
+    nombre: "Pedro",
+    apellidos: "Garcia",
+    matriculas: 5
+},
+{
+    nombre: "Ricardo",
+    apellidos: "Perez",
+    matriculas: 4
+}
+]);
+
+//############################# Operadores ##############################
+//
+// $eq =
+// $ne Distinto
+// $gt >
+// $gte >=
+// $lt <
+// $lte <=
+// $in que se encuentren en un array
+// $exists que existe el campo
+// $or que cumpla alguna de las condiciones, se coloca al inicio
+// $and que cumpla todas las condiciones
+
+//############################# Busqueda ################################
+
+// Metodo find
+
+db.collection.find(query)
+
+//Todos los registros
+db.alumnos.find({})
+
+//Todos los alumnos con 3 matriculas
+db.alumnos.find({matriculas: 3})
+
+//Todos los alumnos que se llaman sonia con 2 matriculas
+db.alumnos.find({nombre:"Sonia", matriculas: 2})
+
+// alumnos con matriculas > 4
+db.alumnos.find({matriculas: {$g"659487689f318017dc91d029"t:4}})
+
+// alumnos cuyo nombre sea Sonia o Juan
+db.alumnos.find({nombre:{$in: ["Sonia", "Juan"]}})
+
+// alumnos que tienen matriculas
+db.alumnos.find({matriculas: {$exists: true}})
+
+// alumnos que se llamen Juan o que tengan mas de 6 matriculas
+db.alumnos.find({$or: [{nombre: "Juan"}, {matriculas: {$gt:6}}]})
+
+//########################### Actualizacion #############################
+
+// Metodo updateOne
+// - Recibe un parametro de busqueda y otro con lo que debe modificar
+// - $set
+
+db.collection.updateOne(
+{parametroBusqueda},
+{$set: {parametros a modificar}}
+);
+
+// Modifca el id indicado cambiandole el nombre y la matriculas
+db.alumnos.updateOne(
+    {_id:ObjectId("659487689f318017dc91d029")},
+    {$set: {matriculas:22, nombre:Carlos}},
+);
+
+// Metodo updateMany
+// Igual que updateOne pero para modificar muchos
+
+//Actualiza los documentos con el nombre Carlos y menos o igual a 6 matriculas -> el nombre por Pedro
+db.alumnos.updateMany(
+{
+    {$and: [{nombre: "Carlos"}, {matriculas: {$lte: 6}}]},
+    {$set: {nombre: "Pedro"}},
+}
+);
+
+//############################# Borrado #################################
+
+// deleteOne / deleteMany
+// Recibe el parametro o condicion de borrado
+// Si es deleteOne borra el primero encontrado deleteMany, borra todos
+
+db.collection.deleteOne({filtro});
+
+//Borra El alumno primero con nombre carlos y 4 matriculas
+
+db.collection.deleteOne(
+    {nombre: "Carlos", matriculas: 4}
+);
+

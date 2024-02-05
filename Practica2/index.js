@@ -84,6 +84,19 @@ const requestListener = function (request,response){
     });
     }
 }
+Superheroe.find({ 
+    nombre: "Batman"
+}, (err, docs) => {
+   if(err){
+       console.log(`Error: ` + err)
+   } else{
+     if(docs.length === 0){
+         console.log("No existe")
+     } else{
+       console.log(Superheroe._id)
+     }
+   }
+});
 
 //Declaramos el puerto, el localhost y el servidor
 const port = 3000; 
