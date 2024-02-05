@@ -48,10 +48,11 @@ const requestListener = function (request,response){
     if (superHeroe != null){
         //Busqueda en la base de datos mongo por superheroe
         Superheroe.find({nombre: superHeroe}, (err,superheroes) =>{
-            //Si hay error o no hay resultados, mostramos el error
+            //Si hay error o no no hemos encontrado superheroe
             if(err || superheroes.length == 0){
             response.setHeader("Content-Type", "text/html");
-            response.writeHead(500);
+            //Respondemos con el error 404
+            response.writeHead(404);
             response.write("<h1>Sin Resultados</h1>");
             response.end;
             return;
@@ -71,9 +72,14 @@ const requestListener = function (request,response){
         //Llamamos a la funcion buscarSuperheroes y le pasamos un posible error 
         // y la lista de superheroes que compone el callback
         buscarSuperheroes((err,lista) => {
-        //Si hay error, mostramos el error por consola aunque podr;iamos mostrarlo por pantalla mandando un mensaje 500
+        //Si hay error, mostramos el error por consola y por pantalla mandando un mensaje 404
         if (err){
             console.log(err);
+            response.setHeader("Content-Type", "text/html");
+            //Respondemos con el error 404
+            response.writeHead(404);
+            response.write("<h1>Error 404</h1>");
+            response.end;
             return;
         }
         response.setHeader("Content-Type", "text/html");
