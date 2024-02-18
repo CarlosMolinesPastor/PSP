@@ -6,13 +6,7 @@ const Libros = require("./models/libros.js");
 //Creamos la cnexión a la base de datos
 mongoose.connect('mongodb://127.0.0.1:27017/biblioteca');
 
-//const libroSchema = new mongoose.Schema({
-//  titulo: String,
-//  autor: [String],
-//  ejemplares: Number
-//});
-//
-//const Libros = mongoose.model('libros', libroSchema);
+//Schema en modulo libros.js
 
 //Creamos el servidor
 let app = express();
@@ -32,7 +26,7 @@ app.get("/libros", (req, res) => {
       res.send(result);
     } else {
       //Si no encontramos libros, devolvemos un error
-      res.send(404, { message: 'Libros no encontrados' });
+      res.status(404).send({ message: 'Libros no encontrados' });
     }
   });
 });
