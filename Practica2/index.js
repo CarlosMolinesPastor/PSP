@@ -13,7 +13,14 @@ let marvelSchema = new mongoose.Schema({
 //Creamos el modelo de la coleccion de la base de datos
 let Superheroe = mongoose.model("superheroes", marvelSchema);
 
+//###################### Conexion a la base de datos ########################
+// Evitamos los mensajes de error de deprecated #### Buscado en internet
+mongoose.set("strictQuery", true);
+// Conectamos a la base de datos por el puerto especificado.
+mongoose.connect("mongodb://localhost:27017/Marvel");
+
 //###################### Funciones ########################
+
 // Funcion para buscar los superheroes en la base de datos
 // Se declara una variable filtro que se inicializa vacia
 function buscarSuperheroes(paramNombre, callback) {
@@ -34,7 +41,8 @@ function buscarSuperheroes(paramNombre, callback) {
       callback(err, "No se encontraron superheroes");
       return;
     }
-    // Si se proporcionó un nombre y solo se encontró un superhéroe, genera HTML para un solo superhéroe
+    // Si se proporcionó un nombre y solo se encontró mas de un superheroe, 
+    // genera HTML para un solo superhéroe
     // En todos los demás casos, genera HTML para varios superhéroes
     if (paramNombre !== undefined && superheroes.length > 0 ) {
       generarHTMLUnico(superheroes[0], callback);
@@ -43,6 +51,7 @@ function buscarSuperheroes(paramNombre, callback) {
     }
   });
 }
+
 // Funcion para generar el HTML de la tabla
 function generarHTMLTabla(superheroes, callback) {
   //Se crea una variable tablaHtml que se inicializa con la etiqueta de apertura de la tabla
@@ -56,6 +65,7 @@ function generarHTMLTabla(superheroes, callback) {
   tablaHtml += "</table>";
   callback(null, tablaHtml);
 }
+
 // Funcion para generar el HTML de un solo superheroe
 function generarHTMLUnico(superheroe, callback) {
   let unico = `<h1>Super Heroe: ${superheroe.nombre}</h1><p>Superpoder: ${superheroe.superpoder}</p><p>Debilidad: ${superheroe.debilidad}</p><p>Fuerza: ${superheroe.fuerza}</p>`;
@@ -98,11 +108,7 @@ server.listen(port);
 //Mostramos un mensaje por consola
 console.log("Server running at http://127.0.0.1:3000/");
 
-//###################### Conexion a la base de datos ########################
-// Evitamos los mensajes de error de deprecated #### Buscado en internet
-mongoose.set("strictQuery", true);
-// Conectamos a la base de datos por el puerto especificado.
-mongoose.connect("mongodb://localhost:27017/Marvel");
+
 
 ////###################### Creacion de los documentos y la coleccion ########################
 //
