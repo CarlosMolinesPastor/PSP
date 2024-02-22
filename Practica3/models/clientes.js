@@ -1,5 +1,7 @@
+// Descripción: Modelo de datos para los clientes
 const mongoose = require("mongoose");
 
+//Definimos el esquema de los clientes
 const clienteSchema = new mongoose.Schema({
     nombre: String,
     edad: Number,
@@ -9,4 +11,5 @@ const clienteSchema = new mongoose.Schema({
     tratamiento: ["Limpieza Bucal", "Endodoncia", " Ortodoncia", "Empaste", "Revision", "Reposicion Pieza"]
 });
 
+//Exportamos el modelo
 module.exports = mongoose.model("Cliente", clienteSchema);
