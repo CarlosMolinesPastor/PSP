@@ -1,6 +1,12 @@
+// Autor: karlinux - Carlos Molines Pastor
+// Descripción: Ejemplo de una API REST con Express y MongoDB
+
+// Importamos los módulos necesarios
 const express = require("express");
 const mongoose = require("mongoose");
+// Importamos el modelo de clientes
 const Clientes = require("./models/clientes");
+// Importamos las funciones que necesitamos del archivo main.js
 const {
   createCliente,
   createTable,
@@ -10,9 +16,10 @@ const {
   deleteCliente,
   updateCliente,
   searchCliente,
-  deleteAll
+  deleteAll,
 } = require('./public/main.js');
 
+// Creamos una instancia de express
 const app = express()
 const port = 3000
 
@@ -48,6 +55,7 @@ function validarId(req, res, next) {
 }
 //##################################   Endspoints  ########################################.
 
+//##################################### GET ##############################################.
 //Creamos un endpoint para obtener todos los clientes
 app.get("/clientes", (req, res) => {
   Clientes.find().then((result) => {
@@ -59,7 +67,6 @@ app.get("/clientes", (req, res) => {
     }
   });
 });
-
 
 //Creamos un endpoint para buscar clientes por su nombre y edad > x
 app.get("/clientes/search", (req, res) => {
@@ -92,7 +99,7 @@ app.get("/clientes/:id", validarId, (req, res, next) => {
     .catch(next); // Pasamos el error al middleware de manejo de errores
 });
 
-
+// ##################################### POST ##############################################.
 //Creamos un endpoint para añadir un cliente metodo POST
 app.post("/clientes", (req, res) => {
   //Creamos un nuevo cliente con los datos que nos pasan por el body
@@ -113,6 +120,7 @@ app.post("/clientes", (req, res) => {
   });
 });
 
+// ##################################### PUT ##############################################.
 //Creamos un endpoint para modificar un cliente por su id
 app.put("/clientes/:id", validarId, (req, res, next) => {
   //Guardamos el id que nos pasan por la URL
@@ -137,7 +145,7 @@ app.put("/clientes/:id", validarId, (req, res, next) => {
     .catch(next); // Pasamos el error al middleware de manejo de errores
 });
 
-//Creamos un endpoitn para modificar un cliente por su nombre y edad > x
+//Creamos un endpoitn para modificar todos cliente por su nombre y edad > x
 app.put("/clientes", (req, res) => {
   //Creamos un objeto con los datos que nos pasan por el body
   const nombre = req.body.nombre;
@@ -147,16 +155,18 @@ app.put("/clientes", (req, res) => {
     poblacion: req.body.poblacion,
     tratamiento: req.body.tratamiento
   };
-  //Buscamos el cliente por su nombre y edad > x y lo modificamos con los datos que nos pasan por el body
-  Clientes.findOneAndUpdate({ nombre: nombre, edad: { $gt: edad } }, cliente).then(result => {
-    if (result) {
-      res.json(result);
+
+  //Buscamos los clientes por su nombre y edad > x y los modificamos con los datos que nos pasan por el body
+  Clientes.updateMany({ nombre: nombre, edad: { $gt: edad } }, cliente).then(result => {
+    if (result.modifiedCount == 0) {
+      res.status(304).send({ message: 'Cliente no modificado' });
     } else {
-      res.status(404).send({ message: 'Cliente no encontrado' });
+      res.json(result);
     }
   });
 });
 
+// ##################################### DELETE ##############################################.
 //Creamos un endpoint para borrar un cliente por su id
 app.delete("/clientes/:id", validarId, (req, res, next) => {
   //Guardamos el id que nos pasan por la URL
@@ -186,6 +196,8 @@ app.delete("/clientes", (req, res, next) => {
     .catch(next); // Pasamos el error al middleware de manejo de errores
 });
 
+
+// ##################################### MONGO ##############################################.
 //Clientes.insertMany([
 //  {
 //    "nombre": "Juan",

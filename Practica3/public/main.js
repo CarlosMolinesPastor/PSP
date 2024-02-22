@@ -1,6 +1,6 @@
 // Este archivo contiene las funciones que se utilizan en el archivo index.html
 
-// Función para crear un nuevo cliente
+//##################################### POST ##############################################. 
 function createCliente() {
   // Obtener los valores de los campos de entrada
   const nombre = document.getElementById('nombre').value;
@@ -8,6 +8,10 @@ function createCliente() {
   const direccion = document.getElementById('direccion').value;
   const poblacion = document.getElementById('poblacion').value;
   const tratamiento = document.getElementById('tratamiento').value;
+  if (edad !== '' && isNaN(edad)) {
+    document.getElementById('newClient').innerText = 'La edad debe ser un número';
+    return;
+  }
   // Enviar una solicitud POST al servidor
   fetch('/clientes', {
     method: 'POST',
@@ -18,7 +22,12 @@ function createCliente() {
     body: JSON.stringify({ nombre, edad, direccion, poblacion, tratamiento }),
   })
     // Convertir la respuesta a un objeto JSON
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Cliente no encontrado');
+      }
+      return response.json();
+    })
     // Imprimir la respuesta en la consola
     .then(data => {
       console.log(data),
@@ -26,8 +35,8 @@ function createCliente() {
         getAllDocuments();
     })
     // Imprimir errores en la consola
-    .catch((error) => {
-      console.error('Error:', error);
+    .catch(error => {
+      document.getElementById('newClient').innerText = error.message;
     });
   // Después de crear el cliente, limpia los campos de entrada
   document.getElementById('nombre').value = '';
@@ -37,6 +46,7 @@ function createCliente() {
   document.getElementById('tratamiento').value = '';
 }
 
+//##################################### GET ##############################################.
 // Función para crear una tabla HTML a partir de un array de clientes
 function createTable(clientes, includeHeaders) {
   let table = '<table>';
@@ -71,16 +81,6 @@ function createTable(clientes, includeHeaders) {
   // Cerrar la tabla y devolverla
   table += '</table>';
   return table;
-}
-
-// Función para copiar texto al portapapeles.
-function copyToClipboard(text) {
-  var textarea = document.createElement("textarea");
-  textarea.textContent = text;
-  document.body.appendChild(textarea);
-  textarea.select();
-  document.execCommand("copy");
-  document.body.removeChild(textarea);
 }
 
 // Función para obtener todos los documentos de la base de datos
@@ -124,6 +124,7 @@ function getDocumentById() {
     });
 }
 
+// ##################################### DELETE ##############################################.
 // Función para borrar un documento por su ID
 function deleteCliente() {
   // Obtener el valor del campo de entrada
@@ -135,7 +136,7 @@ function deleteCliente() {
     // Convertir la respuesta a un objeto JSON
     .then(response => {
       if (!response.ok) {
-        throw new Error('Error al borrar el cliente');
+        throw new Error('Cliente no encontrado');
       }
       // Obtener todos los documentos de la base de datos y mostrarlos en la página
       return response.json();
@@ -148,10 +149,32 @@ function deleteCliente() {
     })
     // Imprimir errores en la consola
     .catch(error => {
-      document.getElementById('searchResult').innerText = error.message;
+      document.getElementById('deleteOne').innerText = error.message;
     });
 }
 
+// Función para borrar todos los documentos de la base de datos
+function deleteAll() {
+  fetch('/clientes', {
+    method: 'DELETE'
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error al borrar todos los clientes');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Todos los clientes borrados', data);
+      // Obtener todos los documentos de la base de datos y mostrarlos en la página
+      getAllDocuments();
+    })
+    .catch(error => {
+      document.getElementById('deleteAll').innerText = error.message;
+    });
+}
+
+// ##################################### PUT ##############################################.
 // Función para actualizar un documento por su ID
 function updateCliente() {
   // Obtener los valores de los campos de entrada
@@ -221,26 +244,17 @@ function searchCliente() {
     });
 }
 
-// Función para borrar todos los documentos de la base de datos
-function deleteAll() {
-  fetch('/clientes', {
-    method: 'DELETE'
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error al borrar todos los clientes');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log('Todos los clientes borrados', data);
-      // Obtener todos los documentos de la base de datos y mostrarlos en la página
-      getAllDocuments();
-    })
-    .catch(error => {
-      document.getElementById('deleteAll').innerText = error.message;
-    });
+//##################################### ALTERNATIVE ##############################################.
+// Función para copiar texto al portapapeles.
+function copyToClipboard(text) {
+  var textarea = document.createElement("textarea");
+  textarea.textContent = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
 }
+
 // Exportar las funciones para que estén disponibles en index.html
 module.exports = {
   createCliente,
@@ -251,5 +265,5 @@ module.exports = {
   deleteCliente,
   updateCliente,
   searchCliente,
-  deleteAll
+  deleteAll,
 };

@@ -27,10 +27,13 @@
         }
     </style>
 </head>
+<!-- cargamos los documentos en la pagina en la carga del body -->
 
 <body onload="getAllDocuments()">
     <div class="centrado">
-        <h1>CLIENTES DENTISTAS</h1>
+        <div class="centrado-interior">
+            <h1>CLIENTES DENTISTAS</h1>
+        </div>
 
         <div id="allDocuments"></div>
 
@@ -41,10 +44,12 @@
         <input type="text" id="poblacion" placeholder="Población">
         <input type="text" id="tratamiento" placeholder="Tratamiento">
         <button onclick="createCliente()">CREAR CLIENTE</button>
+        <div id="newClient"></div>
 
         <h2>BORRAR CLIENTE POR ID</h2>
         <input type="text" id="deleteId" placeholder="ID del cliente">
         <button onclick="deleteCliente()">BORRAR CLIENTE</button>
+        <div id="deleteOne"></div>
 
         <div class="centrado-interior">
             <h2>BORRAR BASE DE DATOS
