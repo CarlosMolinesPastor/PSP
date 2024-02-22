@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente Web</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .centrado-interior {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="centrado"></div>
+    <h1>CLIENTES DENTISTAS</h1>
+
+    <h2>CONSULTAS</h2>
+
+    <button onclick="getAllDocuments()">TODOS LOS CLIENTES</button>
+    <div id="allDocuments"></div>
+
+    <h2>BUSCAR CLIENTE POR ID</h2>
+    <input type="text" id="documentId" placeholder="ID del documento">
+    <button onclick="getDocumentById()">OBTENER CLIENTE</button>
+    <div id="singleDocument"></div>
+
+    <h2>Actualizar un cliente por ID</h2>
+    <input type="text" id="updateId" placeholder="ID del cliente">
+    <input type="text" id="updateNombre" placeholder="Nombre">
+    <input type="text" id="updateEdad" placeholder="Edad">
+    <input type="text" id="updateDireccion" placeholder="Dirección">
+    <input type="text" id="updatePoblacion" placeholder="Población">
+    <input type="text" id="updateTratamiento" placeholder="Tratamiento">
+    <button onclick="updateCliente()">Actualizar Cliente</button>
+    <div id="updatedClient"></div>
+
+    <h2>Buscar cliente por nombre y edad</h2>
+    <input type="text" id="searchNombre" placeholder="Nombre">
+    <input type="text" id="searchEdad" placeholder="Edad">
+    <button onclick="searchCliente()">Buscar Cliente</button>
+    <div id="searchResult"></div>
+
+    <div class="centrado-interior">
+            <h2>BORRAR BASE DE DATOS
+                <button onclick="deleteAll()">BORRAR</button>
+                <div id="deleteAll"></div>
+            </h2>
+
+            <h2>
+                <div><a href="nuevo.html">
+                    <button>CREAR NUEVO / BORRAR CLIENTE</button></a></div>
+            </h2>
+            <h2>
+                <div><a href="index.html">
+                    <button>PRINCIPAL</button></a></div>
+            </h2>
+        </div>
+    </div>
+
+    <script src="./public/main.js"></script>
+</body>
+
+</html>

@@ -57,7 +57,7 @@ const requestListener = function (request, response) {
   fs.readFile(filePath, (err, data) => {
     //Si hay un error, responde con un mensaje de error
     if (err) {
-      response.writeHead(500);
+      response.writeHead(404);
       response.end("Error al cargar el archivo: " + filePath);
       //Si no hay error, responde con el archivo
     } else {

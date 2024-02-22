@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente Web</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .centrado-interior {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body onload="getAllDocuments()">
+    <div class="centrado">
+        <h1>CLIENTES DENTISTAS</h1>
+
+        <div id="allDocuments"></div>
+
+        <h2>CREAR NUEVO CLIENTE</h2>
+        <input type="text" id="nombre" placeholder="Nombre">
+        <input type="text" id="edad" placeholder="Edad">
+        <input type="text" id="direccion" placeholder="Dirección">
+        <input type="text" id="poblacion" placeholder="Población">
+        <input type="text" id="tratamiento" placeholder="Tratamiento">
+        <button onclick="createCliente()">CREAR CLIENTE</button>
+
+        <h2>BORRAR CLIENTE POR ID</h2>
+        <input type="text" id="deleteId" placeholder="ID del cliente">
+        <button onclick="deleteCliente()">BORRAR CLIENTE</button>
+
+        <div class="centrado-interior">
+            <h2>BORRAR BASE DE DATOS
+                <button onclick="deleteAll()">BORRAR</button>
+                <div id="deleteAll"></div>
+            </h2>
+
+            <h2>
+                <div><a href="consultas.html">
+                        <button>CONSULTAS Y ACTUALIZACIONES</button></a></div>
+            </h2>
+            <h2>
+                <div><a href="index.html">
+                        <button>PRINCIPAL</button></a></div>
+            </h2>
+        </div>
+    </div>
+
+    <script src="./public/main.js"></script>
+</body>
+
+</html>

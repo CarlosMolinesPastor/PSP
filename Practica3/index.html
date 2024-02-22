@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente Web</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body onload="getAllDocuments()">
+    <div class="center-content">
+        <h1>CLIENTES DENTISTAS</h1>
+
+        <h2>
+            <div><a href="nuevo.html">
+            <button>CREAR NUEVO / BORRAR CLIENTE</button></a></div>
+        </h2>
+        <h2>
+            <div><a href="consultas.html">
+            <button>CONSULTAS Y ACTUALIZACIONES</button></a></div>
+        </h2>
+    </div>
+
+    <script src="./public/main.js"></script>
+</body>
+
+</html>
