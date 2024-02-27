@@ -1,0 +1,166 @@
+{
+	"info": {
+		"_postman_id": "1e0782ed-ad86-47d0-a5ab-15ceee1112a2",
+		"name": "Practica3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33023614"
+	},
+	"item": [
+		{
+			"name": "BuscarNombreEdad>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/clientes/search?nombre=Laura&edad=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"clientes",
+						"search"
+					],
+					"query": [
+						{
+							"key": "nombre",
+							"value": "Laura"
+						},
+						{
+							"key": "edad",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "IntroducirNuevo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Jaime\",\n    \"edad\": 8,\n    \"direccion\": \"Lima\",\n    \"poblacion\": \"Cajar\",\n    \"tratamiento\": [\"Empastes\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"clientes"
+					]
+				},
+				"description": "PostNuevo"
+			},
+			"response": []
+		},
+		{
+			"name": "BuscarxID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/clientes/65d72ea1b73c55aa98c85ec4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"clientes",
+						"65d72ea1b73c55aa98c85ec4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ModificarxID",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"ModAngel\",\n    \"edad\": 33,\n    \"direccion\": \"Medico Pascual\",\n    \"poblacion\": \"Alicante\",\n    \"tratamiento\": [\"Empastes\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/clientes/65d72ea1b73c55aa98c85ec4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"clientes",
+						"65d72ea1b73c55aa98c85ec4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ModificarTodosXNombreEdad>",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Laura\",\n    \"edad\": 20,\n    \"direccion\": \"MidireccionMod\",\n    \"poblacion\": \"Alcoy\",\n    \"tratamiento\": [\"Ortodoncia\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BorrarxID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/clientes/65d72ea1b73c55aa98c85ec4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"clientes",
+						"65d72ea1b73c55aa98c85ec4"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
