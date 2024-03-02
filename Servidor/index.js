@@ -47,6 +47,9 @@ function getContenType(cadena) {
     case ".html":
       tip = "text/html";
       break;
+    case ".css":
+      tip = "text/css";
+      break;
     case ".js":
       tip = "text/javascript";
     default:
