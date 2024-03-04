@@ -4,7 +4,7 @@ const url = require("url");
 const Libros = require("./models/libros.js");
 
 //Creamos la cnexión a la base de datos
-mongoose.connect('mongodb://127.0.0.1:27017/biblioteca');
+mongoose.connect("mongodb://127.0.0.1:27017/biblioteca");
 
 //Schema en modulo libros.js
 
@@ -25,12 +25,12 @@ app.get("/libros", (req, res) => {
     if (result) {
       res.send(result);
     } else {
-      //Si no encontramos libros, devolvemos un error
-      res.status(404).send({ message: 'Libros no encontrados' });
+      //Si no encontramos libros, devolvemos un errood
+      res.status(404).send({ message: "Libros no encontrados" });
     }
   });
 });
-
+//Creamos el endpoint para el método GET y le decimos que nos devuelva el libro con el id que le pasemos
 app.get("/libros/:id", (req, res) => {
   //Creamos una variable que nos guarde el id que nos llega en la petición
   let id = req.params.id;
@@ -41,7 +41,7 @@ app.get("/libros/:id", (req, res) => {
       res.send(result);
     } else {
       //Si el libro no existe, devolvemos un error
-      res.status(404).send({ message: 'Libro no encontrado' });
+      res.status(404).send({ message: "Libro no encontrado" });
     }
   });
 });
@@ -74,15 +74,18 @@ app.post("/libros", (req, res) => {
   libro.autor = req.body.autor;
   libro.ejemplares = req.body.ejemplares;
   //Guardamos el libro en la base de datos
-  libro.save().
+  libro
+    .save()
     //Si todo va bien, devolvemos el libro guardado en la base de datos tanto por consola como al cliente
-    then((result) => {
+    .then((result) => {
       console.log("Libro guardado en la base de datos");
       res.status(200).send(result);
-    }).
-    catch((error) => {
+    })
+    .catch((error) => {
       console.log("Error al guardar el libro en la base de datos");
-      res.status(500).send({ message: 'Error al guardar el libro en la base de datos' });
+      res
+        .status(500)
+        .send({ message: "Error al guardar el libro en la base de datos" });
     });
 });
 
@@ -94,11 +97,10 @@ app.delete("/libros/:id", (req, res) => {
   Libros.findByIdAndDelete(id).then((result) => {
     //Si el libro existe lo borramos y devolvemos un mensaje de éxito
     if (result) {
-      res.status(200).send({ message: 'Libro Borrado' });
-    }
-    else {
+      res.status(200).send({ message: "Libro Borrado" });
+    } else {
       //Si el libro no existe, devolvemos un error
-      res.status(404).send({ message: 'Libro no encontrado' });
+      res.status(404).send({ message: "Libro no encontrado" });
     }
   });
 });
@@ -113,11 +115,10 @@ app.put("/libros/:id", (req, res) => {
   Libros.findByIdAndUpdate(id, update).then((result) => {
     //Si el libro existe lo actualizamos y devolvemos un mensaje de éxito
     if (result) {
-      res.status(200).send({ message: 'Libro Actualizado' });
-    }
-    else {
+      res.status(200).send({ message: "Libro Actualizado" });
+    } else {
       //Si el libro no existe, devolvemos un error
-      res.status(404).send({ message: 'Libro no encontrado' });
+      res.status(404).send({ message: "Libro no encontrado" });
     }
   });
 });
