@@ -78,7 +78,7 @@ modeloEsquema.find({}).then(
     error =>{
         console.log("Mensaje", error);
     }
-);<document|str
+);
 
 modeloEsquema.find({nombre:"xxxxxxx"}).then(
     result => {
