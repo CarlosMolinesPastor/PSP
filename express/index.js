@@ -1,6 +1,6 @@
 //Creacion de servidor en express
 //Importar express
-const express = require("express");
+const express = require('express');
 //Crear servidor
 const app = express();
 //Definir puerto
@@ -17,9 +17,11 @@ app.listen(port, () => {
 mongoose = require("mongoose");
 //Conectar a la base de datos
 //URL de conexion
-mongoose.connect("mongodb://localhost:27017/clientes");
+mongoose.connect('mongodb://localhost:27017/personas', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB Connected...'))
+  .catch(err => console.log(err));
 //Esquema
-let clienteSchema = new mongoose.Schema({
+let personaSchema = new mongoose.Schema({
   nombre: String,
   apellido: String,
   edad: Number,
@@ -28,9 +30,9 @@ let clienteSchema = new mongoose.Schema({
   telefono: String,
 });
 //Modelo
-const Clientes = mongoose.model("Clientes", clienteSchema);
-//Insertamos varios clientes
-// Clientes.insertMany([
+const Personas = mongoose.model("Personas", personaSchema);
+//Insertamos varios personas
+// Personas.insertMany([
 //   {
 //     nombre: "Juan",
 //     apellido: "Garcia",
@@ -54,28 +56,32 @@ const Clientes = mongoose.model("Clientes", clienteSchema);
 //     direccion: "Calle Luna 3",
 //     poblacion: "Madrid",
 //     telefono: "666555222",
-//   },
+//   }
 // ]);
-//Clientes.find().then(result => console.log(result));
-//
+Personas.find().then((result) => console.log(result));
+
+//######################################## GET ########################################
+
 //Endpoint
-//Ruta: /clientes
+
+//Ruta: /personas
 //Metodo: GET
-app.get("/clientes", (req, res) => {
-  clientes.fins({}).then((result) => {
+app.get("/", (req, res) => {
+  Personas.find({}).then((result) => {
     if (result.length > 0) {
       res.status(200).json(result);
       console.log(result);
     } else {
-      res.status(404).send("No hay clientes");
+      res.status(404).send("No hay personas");
     }
   });
 });
 
 //Buscamos cliente por id
-//Ruta: /clientes/:id
-app.get("/clientes/:id", (req, res) => {
-  clientes.findById(id).then((result) => {
+//Ruta: /personas/:id
+app.get("/personas/:id", (req, res) => {
+  let id = req.params.id;
+  Personas.findById(id).then((result) => {
     if (result) {
       res.status(200).json(result);
       console.log(result);
@@ -84,19 +90,82 @@ app.get("/clientes/:id", (req, res) => {
     }
   });
 });
-
-//Bucsar cliente por poblacion
-//
-//Ruta: /clientes/poblacion/:poblacion
-//Metodo: GET
-//Parametros: poblacion
-app.get("/clientes/poblacion/:poblacion", (req, res) => {
-  clientes.find({ poblacion: req.params.poblacion }).then((result) => {
+//Bucsar cliente por poblacion y los ordena por nombre decreciente
+//Ruta: /personas/poblacion/:poblacion
+app.get("/personas/poblacion/:poblacion", (req, res) => {
+  let poblacion = req.params.poblacion;
+  Personas.find({ poblacion: poblacion }).sort({ nombre: -1 }).then((result) => {
     if (result.length > 0) {
       res.status(200).json(result);
       console.log(result);
     } else {
-      res.status(404).send("No hay clientes en esa poblacion");
+      res.status(404).send("No hay personas en esa poblacion");
     }
   });
 });
+
+// //Busca personas por poblacion y las ordena por nombre
+// app.get("/personas/search", (req, res) => {
+//   let poblacion = req.query.poblacion;
+//   let edad = req.query.edad;
+//   // Buscar personas en la base de datos por poblacion y mayores de 27 años
+//   Personas.find({ poblacion: poblacion, edad: { $gt: edad } })
+//     .then((result) => {
+//       if (result.length > 0) {
+//         res.status(200).json(result);
+//         console.log(result);
+//       } else {
+//         res.status(404).send("No hay personas en esa poblacion");
+//       }
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//       res.status(500).send("Error al realizar la búsqueda");
+//     });
+// });
+
+//######################################## POST ########################################
+//Endpoint
+//Agrega nueva persona
+// app.post("/personas", (req, res) => {
+//   // Crear una nueva persona
+//   const nuevaPersona = new Personas({
+//     nombre: req.body.nombre,
+//     apellido: req.body.apellido,
+//     edad: req.body.edad,
+//     direccion: req.body.direccion,
+//     poblacion: req.body.poblacion,
+//     telefono: req.body.telefono,
+//   });
+//   // Guardar la nueva persona en la base de datos
+//   nuevaPersona.save()
+//     .then((result) => {
+//       res.status(201).json(result);
+//       console.log(result);
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//       res.status(500).send("Error al crear la nueva persona");
+//     });
+// });
+
+app.post("/personas", (req, res) => {
+  // Datos de la nueva persona
+  const datosPersona = {
+    nombre: req.body.nombre,
+    poblacion: req.body.poblacion,
+    // Añade aquí cualquier otro campo que necesites
+  };
+
+  // Crear y guardar la nueva persona en la base de datos
+  Personas.create(datosPersona)
+    .then((result) => {
+      res.status(201).json(result);
+      console.log(result);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Error al crear la nueva persona");
+    });
+});
+//######################################## PUT ########################################
